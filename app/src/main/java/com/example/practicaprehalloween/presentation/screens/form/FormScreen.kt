@@ -1,4 +1,4 @@
-package com.example.practicaprehalloween.presentation.ui.screens
+package com.example.practicaprehalloween.presentation.screens.form
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,7 +12,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.practicaprehalloween.presentation.viewmodel.FormViewModel
