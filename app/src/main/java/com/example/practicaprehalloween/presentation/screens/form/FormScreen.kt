@@ -26,8 +26,8 @@ import com.example.practicaprehalloween.presentation.screens.form.FormViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormScreen(
-    //Ahora la pantalla recibe el ViewModel mas no lo crea
-    viewModel: FormViewModel,
+    //Ahora con Android se encarga de pasarnos el "Application" context
+    viewModel: FormViewModel = viewModel(),
     onNavigateBack: () -> Unit // Esto es para poder volver
 ) {
     //Este estado si es local de la UI (esto seria lo que el usuario escribe)
@@ -51,8 +51,7 @@ fun FormScreen(
                 onClick = {
                     //Aca va la logica de la vista, aca notificamos al ViewModel
                     viewModel.saveUserData(textValue)
-                },
-                modifier = Modifier.padding(top = 16.dp)
+                }, modifier = Modifier.padding(top = 16.dp)
             ) { Text("Guardar datos") }
         }
     }

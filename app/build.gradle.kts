@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.datastore.preferences)
     val nav_version = "2.9.5"
     implementation(libs.androidx.compose.bom.v20251001)
     implementation (libs.androidx.compose.material.icons.extended)

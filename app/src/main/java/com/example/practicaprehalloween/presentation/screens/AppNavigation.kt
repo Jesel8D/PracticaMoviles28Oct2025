@@ -6,12 +6,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.Placeholder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.practicaprehalloween.presentation.screens.dashboard.DashboardScreen
-import org.w3c.dom.Text
+import com.example.practicaprehalloween.presentation.screens.theme.ThemeScreen
+import com.example.practicaprehalloween.presentation.screens.form.FormScreen
 
 object AppRoutes {
     const val DASHBOARD = "dashboard"
@@ -26,7 +26,8 @@ fun AppNavigation() {
 
     //Creamos el NavHost que nos sirve como un contenedor
     NavHost(
-        navController = navController, startDestination = AppRoutes.DASHBOARD
+        navController = navController,
+        startDestination = AppRoutes.DASHBOARD
     ) {
         //Aca definimos cada pantalla, o sea los destinos a las cuales nos vamos a mover
         composable(AppRoutes.DASHBOARD) {
@@ -37,12 +38,14 @@ fun AppNavigation() {
         }
         //Esta seccion va a ser para el FormScreen
         composable(AppRoutes.FORM) {
-            PlaceholderScreen("Formulario de FormScreen")
+            FormScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         //Seccion para el ThemeScreen
         composable(AppRoutes.THEME) {
-            PlaceholderScreen("Formulario de ThemeScreen")
+            PlaceholderScreen("Pantalla de tema")
         }
     }
 }
