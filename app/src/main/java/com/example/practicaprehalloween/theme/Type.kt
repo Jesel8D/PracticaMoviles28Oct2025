@@ -1,4 +1,4 @@
-package com.example.practicaprehalloween.ui.theme
+package com.example.practicaprehalloween.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

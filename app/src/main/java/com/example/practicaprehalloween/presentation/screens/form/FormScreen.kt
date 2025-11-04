@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.practicaprehalloween.presentation.viewmodel.FormViewModel
+import com.example.practicaprehalloween.presentation.screens.form.FormViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)

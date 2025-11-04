@@ -1,6 +1,5 @@
-package com.example.practicaprehalloween.ui.theme
+package com.example.practicaprehalloween.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
