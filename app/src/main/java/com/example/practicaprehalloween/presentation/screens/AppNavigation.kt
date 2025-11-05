@@ -45,7 +45,7 @@ fun AppNavigation() {
 
         //Seccion para el ThemeScreen
         composable(AppRoutes.THEME) {
-            PlaceholderScreen("Pantalla de tema")
+            ThemeScreen(onNavigateBack = { navController.popBackStack() })
         }
     }
 }
