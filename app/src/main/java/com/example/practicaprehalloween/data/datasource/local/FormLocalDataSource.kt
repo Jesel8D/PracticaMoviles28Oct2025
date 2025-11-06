@@ -1,34 +1,22 @@
 package com.example.practicaprehalloween.data.datasource.local
 
-import android.content.Context
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
+// 1. Importamos las clases de la base de datos
+import com.example.practicaprehalloween.data.datasource.local.db.FormDao
+import com.example.practicaprehalloween.data.datasource.local.db.FormEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
-//Procedemos a crear una instancia de DataStore para toda nuestra app
-private val Context.dataStore by preferencesDataStore("form_settings")
+// 2. ¡Su dependencia ahora es el DAO!
+class FormLocalDataSource(private val formDao: FormDao) {
 
-class FormLocalDataSource(private val context: Context) {
-    //Creamos la "llave" para guardar nuestro dato
-    companion object {
-        val FORM_DATA_KEY = stringPreferencesKey("form_data")
-    }
-
-    //En esta parte implementaremos las Coroutines
-    //Esta funcion es asincrona
+    // 3. La función 'save' ahora crea un 'Entity' y la inserta
+    //    (Sigue siendo una 'suspend fun' de coroutines)
     suspend fun saveForm(data: String) {
-        context.dataStore.edit { settings ->
-            settings[FORM_DATA_KEY] = data
-        }
+        val newEntry = FormEntity(data = data)
+        formDao.insert(newEntry)
     }
 
-    //Esta funcion es en caso de que despues quiera leer los datos
-    fun getFormData(): Flow<String> {
-        return context.dataStore.data.map { settings ->
-            settings[FORM_DATA_KEY]
-                ?: "" //Aca devolvemos el dato o en caso de que no exista (operador elvis) retornamos ""
-        }
+    // 4. La función 'get' ahora devuelve una Lista de Entities desde el DAO
+    fun getAllFormData(): Flow<List<FormEntity>> {
+        return formDao.getAll()
     }
 }

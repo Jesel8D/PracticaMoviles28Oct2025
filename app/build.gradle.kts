@@ -1,7 +1,9 @@
 plugins {
+    //Top level
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.ksp)
 }
 
 android {
@@ -40,10 +42,17 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.datastore.preferences)
+    //Nuevas dependencias
+    val room_version = "2.8.3"
+    // --- Dependencias de Room ---
+    implementation(libs.androidx.room.runtime)// optional - Kotlin Extensions and Coroutines support for Room
+    implementation(libs.androidx.room.ktx) // Para soporte de Coroutines (Flow y suspend)
+    ksp(libs.androidx.room.compiler)        //BUsa el alias y la versión correcta
     val nav_version = "2.9.5"
+    implementation(libs.androidx.datastore.preferences)
+    //Espaciador
     implementation(libs.androidx.compose.bom.v20251001)
-    implementation (libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.core.ktx)
