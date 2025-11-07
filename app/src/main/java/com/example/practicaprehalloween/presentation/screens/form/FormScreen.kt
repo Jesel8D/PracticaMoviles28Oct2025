@@ -7,12 +7,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-// 1. Importamos LazyColumn y items
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-// 2. Importamos la Entity para saber qué tipo de datos mostrar
 import com.example.practicaprehalloween.data.datasource.local.db.FormEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,14 +40,17 @@ fun FormScreen(
     viewModel: FormViewModel = viewModel(),
     onNavigateBack: () -> Unit
 ) {
-    // 3. 'savedData' ahora es un StateFlow<List<FormEntity>>
     val savedData by viewModel.savedData.collectAsState()
-    var textValue by remember { mutableStateOf("") }
+
+    // Tres estado para los textfields! ---
+    var name by remember { mutableStateOf("") }
+    var powerRanger by remember { mutableStateOf("") }
+    var cartoon by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Formulario Room DB") }, // Título actualizado
+                title = { Text("Formulario de Favoritos") }, // Título actualizado
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
@@ -66,19 +69,40 @@ fun FormScreen(
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            // --- Esta parte (Input y Botón) no cambia ---
+
+            // Tres texfields
             OutlinedTextField(
-                value = textValue,
-                onValueChange = { textValue = it },
-                label = { Text("Escribe aqui tus datos") },
+                value = name,
+                onValueChange = { name = it },
+                label = { Text("Ingresa tu nombre:") },
                 modifier = Modifier.fillMaxWidth()
             )
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+                value = powerRanger,
+                onValueChange = { powerRanger = it },
+                label = { Text("Power Ranger favorito:") },
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+                value = cartoon,
+                onValueChange = { cartoon = it },
+                label = { Text("Caricatura favorita:") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            //BOTÓN DE GUARDAR
             Button(
                 onClick = {
-                    viewModel.saveUserData(textValue)
-                    textValue = "" // Limpiamos el campo
+                    // Llamamos al ViewModel con los tres valores
+                    viewModel.saveUserData(name, powerRanger, cartoon)
+                    // Limpiamos los campos
+                    name = ""
+                    powerRanger = ""
+                    cartoon = ""
                 }, modifier = Modifier.padding(top = 16.dp)
-            ) { Text("Guardar en Room") } // Texto del botón actualizado
+            ) { Text("Guardar en Room") }
 
             Spacer(modifier = Modifier.height(32.dp))
 
@@ -87,16 +111,35 @@ fun FormScreen(
                 style = MaterialTheme.typography.titleMedium
             )
 
-            LazyColumn(modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp)) {
-                // 5. 'savedData' es la List<FormEntity>
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp)
+            ) {
                 items(savedData) { entity ->
-                    Text(
-                        text = "ID ${entity.id}: ${entity.data}",
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.padding(vertical = 4.dp)
-                    )
+                    // Mostramos los nuevos datos en una tarjeta
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                    ) {
+                        Column(modifier = Modifier.padding(12.dp)) {
+                            Text(
+                                text = "ID ${entity.id}: ${entity.name}",
+                                style = MaterialTheme.typography.titleSmall
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = "Ranger: ${entity.powerRanger}",
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                            Text(
+                                text = "Caricatura: ${entity.cartoon}",
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+                    }
                 }
             }
         }

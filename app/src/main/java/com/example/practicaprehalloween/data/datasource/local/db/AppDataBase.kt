@@ -14,9 +14,6 @@ abstract class AppDatabase : RoomDatabase() {
     // 2. Conecta el DAO con la base de datos
     abstract fun formDao(): FormDao
 
-    // 3. Este es el "Singleton pattern".
-    //    Se asegura de que solo exista UNA instancia de tu base de datos
-    //    en toda la app, lo cual es muy importante para el rendimiento.
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null

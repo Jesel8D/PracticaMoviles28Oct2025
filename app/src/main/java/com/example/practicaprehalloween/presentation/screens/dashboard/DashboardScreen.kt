@@ -41,7 +41,7 @@ fun DashboardScreen(
                 //Contenedor de titulo primario
                 titleContentColor = MaterialTheme.colorScheme.primary
             ), title = {
-                Text("DASHBOARD")
+                Text("Dashboard")
             })
     }, bottomBar = {
         BottomAppBar(

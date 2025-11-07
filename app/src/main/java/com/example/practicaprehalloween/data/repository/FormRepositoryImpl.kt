@@ -9,13 +9,13 @@ class FormRepositoryImpl(
     private val localDataSource: FormLocalDataSource
 ) : FormRepository {
 
-    override suspend fun saveForm(data: String) {
-        localDataSource.saveForm(data)
+    // Implementamos la nueva firma de la interfaz
+    override suspend fun saveForm(name: String, powerRanger: String, cartoon: String) {
+        // Y pasamos los parametros al DataSource
+        localDataSource.saveForm(name, powerRanger, cartoon)
     }
 
-    // 2. Implementamos la nueva firma de la interfaz
     override fun getFormData(): Flow<List<FormEntity>> {
-        // Simplemente pasamos la llamada al DataSource
         return localDataSource.getAllFormData()
     }
 }
